@@ -1,0 +1,67 @@
+﻿@model ASPTestWT.ViewModels.UserViewModel
+
+@{
+    ViewBag.Title = "AddUser";
+}
+
+<h2>AddUser</h2>
+@using (Html.BeginForm("", "", FormMethod.Post, new { @action = "https://wonderasptest.azurewebsites.net/api/test?ID=b6608f46-5466-499e-b998-17c24e364456" }))
+{
+    <form role="form">
+        <div class="box-body">
+            <div class="row">
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(model => model.ID)
+                    @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(model => model.FirstName)
+                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(model => model.LastName)
+                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(model => model.Email)
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @Html.HiddenFor(model => model.ID)
+            @Html.HiddenFor(model => model.FirstName)
+            @Html.HiddenFor(model => model.LastName)
+            @Html.HiddenFor(model => model.Email)
+            <div class="">
+                <button type="submit" class="btn btn-primary" id="savebutton">Add</button>
+            </div>
+            @if (!string.IsNullOrWhiteSpace(@ViewBag.Message))
+            {
+                <div>
+                    <h5 class="col-md-4 success-alert">
+                        @ViewBag.Message
+                    </h5>
+                </div>
+            }
+
+        </div>
+    </form>
+}
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index","Home")
+</div>

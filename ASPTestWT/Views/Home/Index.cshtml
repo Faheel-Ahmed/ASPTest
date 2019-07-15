@@ -1,0 +1,105 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<ASPTestWT.ViewModels.UserViewModel>
+@{
+    ViewBag.Title = "View Users";
+}
+
+<div class="row">
+    <div class="col-md-2 text-left">
+        <h2>Users</h2>
+    </div>
+    <div class="col-md-8 text-center">
+        <input class="form-control text-center searchUser" id="search" placeholder="Search by ID" />
+    </div>
+    <div class="col-md-2 box-body text-right">
+        <button onclick="location.href='@Url.Action("AddUser", "User")'" class="btn btn-primary" id="savebutton" style="margin-top:15px"><span class="glyphicon glyphicon-plus"></span> Add New</button>
+    </div>
+</div>
+
+
+<div class="box">
+    <div class="box-body">
+        @Html.AntiForgeryToken();
+        @foreach (var item in Model)
+        {
+            <div class="row userRow">
+                <input type="hidden" value="@Html.DisplayFor(modelItem => item.ID)" />
+                <div class="col-md-1 circleImg" style=" padding: 0;">
+                    <div class="circle">
+                        <div id="ProfileImage">@item.Initials</div>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div style="font-size: 36px;height: 40px;margin-top: 15px;"><span class="firstName">@Html.DisplayFor(modelItem => item.FirstName)</span> <span class="lastName">@Html.DisplayFor(modelItem => item.LastName)</span></div>
+                     <div style="color: blue;">@Html.DisplayFor(modelItem => item.Email)</div>
+                  
+                </div>
+                <div class="col-md-1 text-center" style="line-height: 70px;">
+                    <button class="btn btn-danger btn-lg" style="border-radius: 100%;" onclick="location.href='@Url.Action("Delete", "Home", new { id = item.ID })'"><span class="glyphicon glyphicon-minus"></span></button>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+<div class="text-center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</div>
+
+
+
+
+
+
+
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+
+<script>
+    $(document).ready(function () {
+        $('#category').DataTable();
+    });
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/jquery-1.7.1.min.js")
+    @Scripts.Render("~/Scripts/jquery-ui-1.8.20.min.js")
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+<script>
+
+    $(document).ready(function () {
+
+        jQuery("#search").keydown(function (e) {
+
+            if (e.keyCode == 13) {
+                $.ajax({
+                    type: "POST",
+                    url: '/home/search',
+                    data: "test",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: successFunc,
+                    error: errorFunc
+                });
+
+                function successFunc(data, status) {
+                    alert(data);
+                }
+
+                function errorFunc() {
+                    alert('error');
+                }
+
+
+                e.preventDefault();
+            }
+        });
+    });
+
+</script>
+}

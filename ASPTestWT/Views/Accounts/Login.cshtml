@@ -1,0 +1,64 @@
+﻿@model ASPTestWT.ViewModels.LoginViewModel
+@{
+    ViewBag.Title = "Login Page";
+}
+
+@*<h1 class="content-header" style="text-align: center;">Login</h1>*@
+<div class="col-md-4 col-md-offset-4 text-center">
+    <img src="~/Images/logo.png" alt="Logo">
+</div>
+@using (Html.BeginForm("Login", "Accounts", FormMethod.Post))
+{
+    <form role="form">
+        <div class="box-body">
+            <div class="row">
+                <div class="form-group col-md-4 col-md-offset-4">
+                    <hr />
+                    @Html.LabelFor(model => model.username)
+                    @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4 col-md-offset-4">
+                    @Html.LabelFor(model => model.password)
+                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @Html.HiddenFor(model => model.username)
+            @Html.HiddenFor(model => model.password)
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4 text-center">
+                    <button type="submit" class="btn btn-primary" id="savebutton">Login</button>
+                </div>
+            </div>
+            <div class="row">
+                @if (!string.IsNullOrWhiteSpace(@ViewBag.Message))
+                {
+                    if (@ViewBag.Message.Contains("Invalid"))
+                    {
+                        <div class="alert alert-danger col-md-4 col-md-offset-4" role="alert">
+                            @ViewBag.Message
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-success col-md-4 col-md-offset-4" role="alert">
+                            @ViewBag.Message
+                        </div>
+                    }
+
+                }
+            </div>
+        </div>
+    </form>
+}
+
+
+
+
+
